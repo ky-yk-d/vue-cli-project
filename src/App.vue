@@ -56,7 +56,6 @@ let router = new VueRouter({
 let Auth = function(){
   this.status = false;
   this.isLoggedIn = function(){
-    console.log(this.status);
     return this.status;
   },
   this.logIn = function(){
@@ -75,7 +74,6 @@ router.beforeEach((to, from, next) => {
     // 認証状態を確認
     if (!auth.isLoggedIn()) {
       // 認証していなければログインページにリダイレクト
-      console.log('if');
       next({
         path: '/',
         query: {
@@ -83,11 +81,9 @@ router.beforeEach((to, from, next) => {
         }
       })
     } else {
-      console.log('else1');
       next();
     }
   } else {
-    console.log('else2');
     next(); // 認証の確認が必要ないルートならnext()で遷移
   }
 });
