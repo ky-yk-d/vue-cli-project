@@ -19,6 +19,24 @@ import Top from './components/Top.vue';
 import ChildA from './components/ChildA.vue';
 import ChildB from './components/ChildB.vue';
 
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    isLogin: false
+  },
+  mutations: {
+    login (state){
+      state.isLogin = true;
+    },
+    logout (state){
+      state.isLogin = false;
+    }
+  }
+})
+
 
 import VueRouter from 'vue-router';
 
@@ -53,26 +71,11 @@ let router = new VueRouter({
   ]
 });
 
-let Auth = function(){
-  this.status = false;
-  this.isLoggedIn = function(){
-    return this.status;
-  },
-  this.logIn = function(){
-    this.status = true;
-  },
-  this.logOut = function(){
-    this.status = false;
-  }
-};
-
-const auth = new Auth();
-
 router.beforeEach((to, from, next) => {
   // 上位ルートを含めて認証が必要なルートがあるかを確認
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // 認証状態を確認
-    if (!auth.isLoggedIn()) {
+    if (!store.state.isLogin) {
       // 認証していなければログインページにリダイレクト
       next({
         path: '/',
@@ -90,14 +93,9 @@ router.beforeEach((to, from, next) => {
 
 export default {
   name: 'app',
-  data() {
-    return {
-      status: false
-    }
-  },
   computed: {
     statusMsg: function(){
-      if (this.status){
+      if (store.state.isLogin){
         return 'Logged In';
       } else {
         return 'Logged Out';
@@ -106,12 +104,10 @@ export default {
   },
   methods: {
     logIn(){
-      this.status = true;
-      auth.logIn();
+      store.commit('login');
     },
     logOut(){
-      this.status = false;
-      auth.logOut();
+      store.commit('logout');
     }
   },
   router
