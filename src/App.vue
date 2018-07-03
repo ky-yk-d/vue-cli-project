@@ -110,7 +110,8 @@ export default {
       store.commit('logout');
     }
   },
-  router
+  router,
+  store // 全ての子コンポーネントにVuexのストアを注入
 }
 </script>
 

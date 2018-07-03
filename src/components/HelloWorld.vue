@@ -2,6 +2,7 @@
   <div class="hello">
     <h2>Hello World!</h2>
     <p>msg:{{ $route.params.msg }}</p>
+    <p>{{state}}</p>
   </div>
 </template>
 
@@ -10,6 +11,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  computed: {
+    state: function(){
+      return this.$store.state.isLogin;
+    }
   }
 }
 </script>
