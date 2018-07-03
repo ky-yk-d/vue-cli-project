@@ -25,7 +25,15 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    isLogin: false
+    isLogin: false,
+    todos: [
+      {
+        id: 1, text: 'todo1', done:true
+      },
+      {
+        id: 2, text: 'todo2', done:false
+      }
+    ]
   },
   mutations: {
     login (state){
@@ -33,6 +41,17 @@ const store = new Vuex.Store({
     },
     logout (state){
       state.isLogin = false;
+    }
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo=>todo.done);
+    },
+    doneTodosCount: (state, getters) => {
+      return getters.doneTodos.length;
+    },
+    getTodoById: (state) => function(id){
+      return state.todos.find(todo => todo.id === id);
     }
   }
 })
