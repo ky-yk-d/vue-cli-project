@@ -11,11 +11,14 @@
     </ul>
     <p>{{doneTodosCount}}</p>
     <p>{{getId1}}</p>
+    <input type="button" value="ログイン" v-on:click="login"><br>
+    <input type="button" value="ログアウト" v-on:click="logout"><br>
+     <input type="button" value="ログインエイリアス" v-on:click="loginArias"><br>
   </div>
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex';
+import {mapState, mapGetters, mapMutations} from 'vuex';
 
 export default {
   data(){
@@ -43,6 +46,15 @@ export default {
     ...mapState([
       'isLogin',
     ])
+  },
+  methods: {
+    ...mapMutations([
+      'login',
+      'logout'
+    ]),
+    ...mapMutations({
+      loginArias: 'login'
+    })
   }
 }
 </script>
