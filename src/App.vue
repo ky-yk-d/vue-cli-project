@@ -53,6 +53,13 @@ const store = new Vuex.Store({
     getTodoById: (state) => function(id){
       return state.todos.find(todo => todo.id === id);
     }
+  },
+  actions: {
+    loginAsync({commit}){
+      setTimeout(()=>{
+        commit('login');
+      }, 1500);
+    }
   }
 })
 

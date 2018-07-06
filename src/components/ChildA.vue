@@ -13,12 +13,13 @@
     <p>{{getId1}}</p>
     <input type="button" value="ログイン" v-on:click="login"><br>
     <input type="button" value="ログアウト" v-on:click="logout"><br>
-     <input type="button" value="ログインエイリアス" v-on:click="loginArias"><br>
+    <input type="button" value="ログインエイリアス" v-on:click="loginArias"><br>
+    <input type="button" value="非同期ログイン" v-on:click="loginAsync"><br>
   </div>
 </template>
 
 <script>
-import {mapState, mapGetters, mapMutations} from 'vuex';
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
 
 export default {
   data(){
@@ -54,7 +55,10 @@ export default {
     ]),
     ...mapMutations({
       loginArias: 'login'
-    })
+    }),
+    ...mapActions([
+      'loginAsync'
+    ])
   }
 }
 </script>
