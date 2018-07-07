@@ -135,7 +135,7 @@ let router = new VueRouter({
           component: ChildB,
           name: 'childB',
           meta: {
-            requiresAuth: 'true'
+            requiresAuth: true
           }
         }
       ]
