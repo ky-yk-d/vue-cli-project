@@ -23,8 +23,52 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const moduleA = {
+  state: {
+    count: 1
+  },
+  mutations: {
+    increment(state){
+      // `state` はモジュールのローカルステート
+      state.count++;
+    }
+  },
+  getters: {
+    doubleCount(state){
+      return state.count * 2;
+    },
+    sumWithRootCount(state, getters, rootState){
+      return state.count + rootState.count;
+    }
+  },
+  actions: {
+    incrementIfOddOnRootSum({state, commit, rootState}){
+      if ((state.count + rootState.count) % 2 === 1){
+        commit('increment');
+      }
+    }
+  }
+};
+
+const moduleB = {
+  state: {
+    count: 2
+  },
+  mutations: {
+    square(state){
+      state.count = state.count * state.count;
+    }
+  },
+  getters: {
+    trippleCount(state){
+      return state.count * 3;
+    }
+  }
+}
+
 const store = new Vuex.Store({
   state: {
+    count: 1,
     isLogin: false,
     todos: [
       {
@@ -41,6 +85,9 @@ const store = new Vuex.Store({
     },
     logout (state){
       state.isLogin = false;
+    },
+    incrementRoot(state){
+      state.count++;
     }
   },
   getters: {
@@ -60,6 +107,10 @@ const store = new Vuex.Store({
         commit('login');
       }, 1500);
     }
+  },
+  modules: {
+    a: moduleA,
+    b: moduleB
   }
 })
 
